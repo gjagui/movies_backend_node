@@ -1,40 +1,22 @@
-let all = [
-    {
-        title: "Titulo1",
-        description: "Descripción1",
-        id: "1"
-    },
-    {
-        title: "Titulo2",
-        description: "Descripción2",
-        id: "2"
-    },
-    {
-        title: "Titulo3",
-        description: "Descripción3",
-        id: "3"
-    },
-    {
-        title: "Titulo4",
-        description: "Descripción4",
-        id: "4"
-    },
-    {
-        title: "Titulo5",
-        description: "Descripción5",
-        id: "5"
-    }
-];
+let Users   = require("../models/Users");
+let bcrypt  = require('bcryptjs');
+let salt    = bcrypt.genSaltSync(10);
 
-function allMovies() {
-    return all;
-}
-
-function findMovie($title) {
-
-
-
-    return {title: $title}
+async function allUsers(req, res) {
+    let users = await Users.find({});
+    return users;
 };
 
-module.exports =  {allMovies, findMovie};
+async function createUser(username, password) {
+    let password_hash = bcrypt.hashSync(password, salt);
+    let user = Users({username: username, password: password_hash});
+    await user.save();
+    return {created: true, username: username};    
+};
+
+async function logInUser(username, password) {;
+    let user = await Users.findOne({username: username});
+    return {logInStatus: bcrypt.compareSync(password, user.password)}; 
+};
+
+module.exports =  {allUsers, createUser, logInUser};
