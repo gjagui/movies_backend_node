@@ -7,16 +7,16 @@ async function allUsers(req, res) {
     return users;
 };
 
-async function createUser(username, password) {
-    let password_hash = bcrypt.hashSync(password, salt);
-    let user = Users({username: username, password: password_hash});
+async function createUser(username, userpass) {
+    let password = bcrypt.hashSync(userpass, salt);
+    let user = Users({username, password});
     await user.save();
-    return {created: true, username: username};    
+    return { created: true, username: username };
 };
 
 async function logInUser(username, password) {;
-    let user = await Users.findOne({username: username});
-    return {logInStatus: bcrypt.compareSync(password, user.password)}; 
+    let user = await Users.findOne({username});
+    return { logInStatus: bcrypt.compareSync(password, user.password) }; 
 };
 
 module.exports =  {allUsers, createUser, logInUser};
