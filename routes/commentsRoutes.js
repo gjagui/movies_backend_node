@@ -1,5 +1,9 @@
 let router = require('express').Router();
-let { allComments, createComment, commentsByTitle } = require('../controllers/commentsController');
+
+let { allComments,
+    createComment,
+    commentsByTitle,
+    commentsByUser } = require('../controllers/commentsController');
 
 router.get('/all', async function(req,res) {
     try {
@@ -22,10 +26,20 @@ router.post('/create', async function(req,res) {
     }
 });
 
-router.get('/find/:title', async function(req, res) {
+router.get('/title/:title', async function(req, res) {
     try {
         let comment = await commentsByTitle(req.params.title);
         res.json(comment);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+
+router.get('/user/:username', async function(req, res) {
+    try {
+        let comments = await commentsByUser(req.params.username);
+        res.json(comments);
     }
     catch (error) {
         console.log(error);

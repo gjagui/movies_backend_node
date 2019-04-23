@@ -26,4 +26,9 @@ async function commentsByTitle(title) {
     return {rating, votes, comments};
 };
 
-module.exports =  {allComments, createComment, commentsByTitle};
+async function commentsByUser(username) {
+    let comments = await Comments.find({username});
+    return comments;
+}
+
+module.exports =  {allComments, createComment, commentsByTitle, commentsByUser};
