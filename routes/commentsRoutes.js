@@ -13,7 +13,8 @@ router.get('/all', async function(req,res) {
 
 router.post('/create', async function(req,res) {
     try {
-        let created = await createComment(req.body.username, req.body.password);
+        let { title, username, comment, score} = req.body;
+        let created = await createComment(title, username, comment, score);
         res.json(created);
     }
     catch (error) {

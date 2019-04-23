@@ -11,12 +11,12 @@ async function createUser(username, userpass) {
     let password = bcrypt.hashSync(userpass, salt);
     let user = Users({username, password});
     await user.save();
-    return { created: true, username: username };
+    return { username };
 };
 
 async function logInUser(username, password) {;
     let user = await Users.findOne({username});
-    return { logInStatus: bcrypt.compareSync(password, user.password) }; 
+    return { User: bcrypt.compareSync(password, user.password) }; 
 };
 
 module.exports =  {allUsers, createUser, logInUser};
