@@ -14,7 +14,9 @@ mongoose.set('useNewUrlParser',     true);
 mongoose.set('useFindAndModify',    false);
 mongoose.set('useCreateIndex',      true);
 
-mongoose.connect(urlDB).then(() => console.log("Movies DB online."));
+mongoose.connect(urlDB)
+.then(() => console.log("Movies DB online."))
+.catch(error => console.log(error));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
