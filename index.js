@@ -8,11 +8,13 @@ let commentsRoutes  = require("./routes/commentsRoutes");
 
 let app             = express();
 
+let urlDB = process.env.URLDB || "mongodb://localhost/movies";
+
 mongoose.set('useNewUrlParser',     true);
 mongoose.set('useFindAndModify',    false);
 mongoose.set('useCreateIndex',      true);
 
-mongoose.connect("mongodb://localhost/movies").then(() => console.log("Movies DB online."));
+mongoose.connect(urlDB).then(() => console.log("Movies DB online."));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
