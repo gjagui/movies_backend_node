@@ -14,9 +14,16 @@ async function createUser(username, userpass) {
     return { username };
 };
 
-async function logInUser(username, password) {;
+async function logInUser(username, password) {
     let user = await Users.findOne({username});
     return { User: bcrypt.compareSync(password, user.password) }; 
 };
 
-module.exports =  {allUsers, createUser, logInUser};
+async function changePasswordUser(username, password) {
+    let user = await Users.findOne({username});
+    user.password = bcrypt.hashSync(password, salt);
+    await user.save();
+    return { username };
+};
+
+module.exports =  { allUsers, createUser, logInUser, changePasswordUser };

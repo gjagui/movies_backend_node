@@ -1,5 +1,8 @@
 let router = require('express').Router();
-let {allUsers, createUser, logInUser} = require('../controllers/usersController');
+let {allUsers,
+    createUser,
+    logInUser,
+    changePasswordUser} = require('../controllers/usersController');
 
 router.get('/all', async function(req, res) {
     try {
@@ -24,6 +27,16 @@ router.post('/create', async function(req,res) {
 router.post('/login', async function(req, res) {
     try {
         let status = await logInUser(req.body.username, req.body.password);
+        res.json(status);
+    }
+    catch (error) {
+        console.log(error);  
+    }
+});
+
+router.post('/update', async function(req, res) {
+    try {
+        let status = await changePasswordUser(req.body.username, req.body.password);
         res.json(status);
     }
     catch (error) {
